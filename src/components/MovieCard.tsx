@@ -2,18 +2,17 @@ import React from "react";
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-
 // Define Props interface
 interface MovieCardProps {
-    movie: {
-        imdbID: string;
-        Poster: string;
-        Title: string;
-    };
-    cardHeight?: number;
+  movie: {
+    imdbID: string;
+    Poster: string;
+    Title: string;
+  };
+  cardHeight?: number;
 }
 
-const demoImage = "https://via.placeholder.com/250"; // Replace with your own demo image link
+const placeholderImage = process.env.REACT_APP_PLACEHOLDER_IMAGE;
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, cardHeight = 220 }) => {
   return (
@@ -26,7 +25,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, cardHeight = 220 }) => {
         height: "100%",
         maxWidth: "100%",
         paddingX: "8px",
-        paddingY:'32px'
+        paddingY: "32px"
       }}
     >
       <Link
@@ -40,12 +39,17 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, cardHeight = 220 }) => {
         {/* Movie Poster */}
         <CardMedia
           component="img"
-          image={movie.Poster && movie.Poster !== "N/A" ? movie.Poster : demoImage} // Fallback to demo image
+          image={
+            movie.Poster && movie.Poster !== "N/A"
+              ? movie.Poster
+              : placeholderImage
+          } // Fallback to demo image
           alt={movie.Title}
           sx={{
             width: "100%",
             height: cardHeight,
-            objectFit: "contain"
+            objectFit: "cover",
+           
           }}
         />
         {/* Movie Title */}

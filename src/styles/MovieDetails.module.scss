@@ -1,0 +1,56 @@
+.movieDetails {
+  padding: 20px 0;
+
+  .movieCard {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .movieInfo {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: left;
+    background-color: #fafafa;
+  }
+
+  .movieTitle {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .movieDetail {
+    margin-bottom: 8px;
+    color: #555;
+  }
+
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+
+    svg {
+      margin-bottom: 10px;
+    }
+  }
+  .back-arrow {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: #333;
+    font-size: 16px;
+    gap: 8px; /* Adds spacing between the text and icon */
+    transition: color 0.2s ease-in-out;
+  }
+
+  .back-arrow:hover {
+    color: #555;
+  }
+
+  .back-arrow svg {
+    width: 24px;
+    height: 24px;
+  }
+}

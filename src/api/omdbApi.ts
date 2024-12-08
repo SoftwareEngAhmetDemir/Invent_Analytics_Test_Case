@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // http://www.omdbapi.com/?apikey=48a34b9&type=movie&s=Pokemon&page=24
-const API_KEY = '48a34b9'; // Replace with your OMDb API key
-const BASE_URL = 'https://www.omdbapi.com/';
+const API_KEY = process.env.REACT_APP_API_KEY as string;
+const BASE_URL = process.env.REACT_APP_BASE_URL as string;
 
 export interface Movie {
   imdbID: string;
@@ -28,6 +28,7 @@ export interface MovieDetails {
   Plot: string;
   Poster: string;
   imdbRating: string;
+  Released:string;
 }
 
 export const fetchMovies = async (
