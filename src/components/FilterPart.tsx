@@ -7,8 +7,13 @@ import {
   Tab,
   Box,
 } from '@mui/material';
+import { TextFieldProps } from '@mui/material/TextField';
 import { getMovies } from '../redux/movieSlice';
 import { AppDispatch } from '../redux/store';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface FilterPartProps {
   search: string;
@@ -49,7 +54,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
     setType(newValue);
     dispatch(getMovies({ search, type: newValue, year, page: 1 }));
   };
-
+  const currentYear = dayjs();
   return (
     <>
       <Box style={{ marginBottom: '20px' }}>
@@ -62,14 +67,17 @@ const FilterPart: React.FC<FilterPartProps> = ({
         />
       </Box>
       <Box style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-        <TextField
-          label="Year"
-          variant="outlined"
-          type="number"
-          value={year || ''}
-          onChange={(e) => setYear(e.target.value || null)}
-          style={{ flex: 1 }}
-        />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="Select Years"
+        maxDate={currentYear}
+        openTo="year"
+        views={['year']}
+        yearsOrder="desc"
+        sx={{ minWidth: 250 }}
+        onChange={(date: Dayjs | null) => setYear(date?.year().toString() || null)}
+      />
+    </LocalizationProvider>
         <Tabs
           value={type}
           onChange={handleTypeChange}

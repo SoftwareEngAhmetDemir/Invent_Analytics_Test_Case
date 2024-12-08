@@ -22,7 +22,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, cardHeight = 220 }) => {
         justifyContent: "space-between",
         height: "100%",
         maxWidth: "100%",
-        padding: "8px"
+        paddingX: "8px",
+        paddingY:'32px'
       }}
     >
       <Link
