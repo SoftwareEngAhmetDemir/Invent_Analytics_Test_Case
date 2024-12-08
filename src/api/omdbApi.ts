@@ -1,8 +1,4 @@
-import axios from 'axios';
-
-// http://www.omdbapi.com/?apikey=48a34b9&type=movie&s=Pokemon&page=24
-const API_KEY = process.env.REACT_APP_API_KEY as string;
-const BASE_URL = process.env.REACT_APP_BASE_URL as string;
+import axiosInstance from "../util/axiosInstance";
 
 export interface Movie {
   imdbID: string;
@@ -28,7 +24,7 @@ export interface MovieDetails {
   Plot: string;
   Poster: string;
   imdbRating: string;
-  Released:string;
+  Released: string;
 }
 
 export const fetchMovies = async (
@@ -37,24 +33,22 @@ export const fetchMovies = async (
   year: string | null,
   page: number
 ): Promise<MovieResponse> => {
-  const response = await axios.get(BASE_URL, {
+  const response = await axiosInstance.get("", {
     params: {
-      apiKey: API_KEY,
       s: search,
       type,
       y: year,
-      page,
-    },
+      page
+    }
   });
   return response.data;
 };
 
 export const fetchMovieDetails = async (id: string): Promise<MovieDetails> => {
-  const response = await axios.get(BASE_URL, {
+  const response = await axiosInstance.get("", {
     params: {
-      apiKey: API_KEY,
-      i: id,
-    },
+      i: id
+    }
   });
   return response.data;
 };
