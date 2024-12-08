@@ -71,7 +71,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
             openTo="year"
             views={["year"]}
             yearsOrder="desc"
-            sx={{ width: "100%" }}
+           className={s.datePicker}
             onChange={(date: Dayjs | null) => {
               setPage(1);
               setYear(date?.year().toString() || null);
