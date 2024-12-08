@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies } from '../redux/movieSlice';
 import { RootState, AppDispatch } from '../redux/store';
+import debounce from 'lodash.debounce';
 import {
   TextField,
   Grid,
   Pagination,
   CircularProgress,
-  MenuItem,
-  Select,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import MovieCard from './MovieCard';
 
 const MovieGrid: React.FC = () => {
@@ -23,12 +17,26 @@ const MovieGrid: React.FC = () => {
 
   const [search, setSearch] = useState<string>('Pokemon');
   const [year, setYear] = useState<string | null>(null);
-  const [type, setType] = useState<string | null>(null);
+  const [type, setType] = useState<string | null>('Movie');
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     dispatch(getMovies({ search, type, year, page }));
-  }, [dispatch, search, type, year, page]);
+  }, [dispatch, type, year, page]);
+
+  // Debounced search handler
+  const debouncedSearch = useCallback(
+    debounce((query: string) => {
+      dispatch(getMovies({ search: query, type, year, page: 1 }));
+    }, 300),
+    [dispatch, type, year, page]
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);
+    debouncedSearch(value);
+  };
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -37,11 +45,12 @@ const MovieGrid: React.FC = () => {
   return (
     <div>
       <div style={{ marginBottom: '16px' }}>
+        {/* Search Field with debounce */}
         <TextField
           label="Search"
           variant="outlined"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={handleSearchChange}
           fullWidth
         />
         <TextField
@@ -52,17 +61,6 @@ const MovieGrid: React.FC = () => {
           onChange={(e) => setYear(e.target.value || null)}
           style={{ marginLeft: '16px' }}
         />
-        <Select
-          value={type || ''}
-          onChange={(e) => setType(e.target.value || null)}
-          displayEmpty
-          style={{ marginLeft: '16px' }}
-        >
-          <MenuItem value="">All</MenuItem>
-          <MenuItem value="movie">Movie</MenuItem>
-          <MenuItem value="series">TV Series</MenuItem>
-          <MenuItem value="episode">Episode</MenuItem>
-        </Select>
       </div>
 
       {loading ? (
@@ -70,7 +68,7 @@ const MovieGrid: React.FC = () => {
       ) : (
         <>
           <Grid container spacing={2}>
-          {movies.map((movie) => (
+            {movies.map((movie) => (
               <Grid
                 item
                 xs={12}
@@ -80,7 +78,7 @@ const MovieGrid: React.FC = () => {
                 key={movie.imdbID}
                 style={{ marginBottom: '16px' }}
               >
-               <MovieCard movie={movie} />
+                <MovieCard movie={movie} />
               </Grid>
             ))}
           </Grid>
