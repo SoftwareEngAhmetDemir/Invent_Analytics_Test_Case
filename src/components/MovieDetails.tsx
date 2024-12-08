@@ -13,6 +13,7 @@ import {
   Box,
   Divider,
   IconButton,
+  Grid,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import s from "../styles/MovieDetails.module.scss";
@@ -40,90 +41,105 @@ const MovieDetails: React.FC = () => {
     return (
       <Box textAlign="center" mt={5}>
         <CircularProgress />
-        <Typography>Loading movie details...</Typography>
+        <Typography variant="h6" mt={2}>
+          Loading movie details...
+        </Typography>
       </Box>
     );
   }
 
   return (
-    <div className={s.movieDetails}>
-      <Container maxWidth="sm" sx={{ p: 0 }}>
-        <Card elevation={4} className={s.mainCard}>
-          {/* Hero Section - Movie Poster */}
-          <CardMedia
-            component="img"
-            height="600"
-            image={posterError ? placeholderImage : movieDetails?.Poster}
-            alt={movieDetails?.Title}
-            onError={handleImageError}
-            sx={{
-              objectFit: "fill",
-              height: { xs: "300px", sm: "600px" }, // Responsive
-            }}
-          />
+    <Box>
+      {/* Hero Section */}
+      <Container maxWidth="lg" sx={{ mt: 4  ,p:0}}>
+        <Card elevation={4} sx={{ borderRadius: { lg: 4, sm: 0 }}}>
+          <Grid container spacing={2}>
+            {/* Movie Poster */}
+            <Grid item xs={24} md={4}>
+              <CardMedia
+                component="img"
+                image={posterError ? placeholderImage : movieDetails?.Poster}
+                alt={movieDetails?.Title}
+                onError={handleImageError}
+                sx={{
+                  minWidth: "250px",
+                  width: "100%",
+                  borderRadius: { lg: 4, sm: 0 },
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </Grid>
+            {/* Movie Details Section */}
+            <Grid item xs={24} md={8}>
+              <CardContent>
+                {/* Back Button & Title */}
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {movieDetails?.Title}
+                  </Typography>
+                  <IconButton color="primary" href="/">
+                    <ArrowBackIcon />
+                  </IconButton>
+                </Box>
 
-          {/* Content Section */}
-          <CardContent>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography variant="h4" gutterBottom>
-                {movieDetails?.Title}
-              </Typography>
-              <IconButton color="primary" href="/">
-                <ArrowBackIcon />
-              </IconButton>
-            </Box>
+                <Divider sx={{ my: 2 }} />
 
-            <Divider />
+                {/* Overview */}
+                <Typography variant="h6" gutterBottom>
+                  Overview
+                </Typography>
+                <Typography variant="body1" paragraph>
+                  {movieDetails?.Plot || "No plot description available."}
+                </Typography>
 
-            <Box mt={2}>
-              <Typography variant="h6" gutterBottom>
-                Overview
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {movieDetails?.Plot || "No plot description available."}
-              </Typography>
-            </Box>
+                <Divider sx={{ my: 2 }} />
 
-            <Divider />
-
-            <Box mt={2} mb={2}>
-              <Typography variant="h6" gutterBottom>
-                Details
-              </Typography>
-              <Typography>
-                <strong>Director:</strong> {movieDetails?.Director || "N/A"}
-              </Typography>
-              <Typography>
-                <strong>Cast:</strong> {movieDetails?.Actors || "N/A"}
-              </Typography>
-              <Typography>
-                <strong>Genre:</strong> {movieDetails?.Genre || "N/A"}
-              </Typography>
-              <Typography>
-                <strong>Release Date:</strong> {movieDetails?.Released || "N/A"}
-              </Typography>
-              <Typography>
-                <strong>Duration:</strong> {movieDetails?.Runtime || "N/A"}
-              </Typography>
-            </Box>
-            <Divider/>
-            <Box mt={2}>
-              <Typography variant="h6" gutterBottom>
-                Ratings
-              </Typography>
-              <Typography>
-                <strong>IMDb Rating:</strong>{" "}
-                {movieDetails?.imdbRating || "N/A"}
-              </Typography>
-            </Box>
-          </CardContent>
+                {/* Details Section */}
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Typography>
+                      <strong>Director:</strong>{" "}
+                      {movieDetails?.Director || "N/A"}
+                    </Typography>
+                    <Typography>
+                      <strong>Cast:</strong> {movieDetails?.Actors || "N/A"}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography>
+                      <strong>Genre:</strong> {movieDetails?.Genre || "N/A"}
+                    </Typography>
+                    <Typography>
+                      <strong>Release Date:</strong>{" "}
+                      {movieDetails?.Released || "N/A"}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography>
+                      <strong>Duration:</strong>{" "}
+                      {movieDetails?.Runtime || "N/A"}
+                    </Typography>
+                    <Typography>
+                      <strong>IMDb Rating:</strong>{" "}
+                      {movieDetails?.imdbRating || "N/A"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Grid>
+          </Grid>
         </Card>
       </Container>
-    </div>
+    </Box>
   );
 };
 
