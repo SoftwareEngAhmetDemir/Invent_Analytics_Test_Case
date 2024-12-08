@@ -51,8 +51,8 @@ const MovieDetails: React.FC = () => {
   return (
     <Box>
       {/* Hero Section */}
-      <Container maxWidth="lg" sx={{ mt: 4  ,p:0}}>
-        <Card elevation={4} sx={{ borderRadius: { lg: 4, sm: 0 }}}>
+      <Container maxWidth="lg" sx={{ mt: 4, p: 0 }}>
+        <Card elevation={4} sx={{ borderRadius: { lg: 4, sm: 0 } }}>
           <Grid container spacing={2}>
             {/* Movie Poster */}
             <Grid item xs={24} md={4}>
@@ -105,30 +105,30 @@ const MovieDetails: React.FC = () => {
 
                 {/* Details Section */}
                 <Grid container spacing={2}>
-                  <Grid item xs={6}>
+                  <Grid item sm={24} md={6}>
                     <Typography>
                       <strong>Director:</strong>{" "}
                       {movieDetails?.Director || "N/A"}
                     </Typography>
-                    <Typography>
+                    <Typography marginTop={ '10px'}>
                       <strong>Cast:</strong> {movieDetails?.Actors || "N/A"}
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item sm={24} md={6}>
                     <Typography>
                       <strong>Genre:</strong> {movieDetails?.Genre || "N/A"}
                     </Typography>
-                    <Typography>
+                    <Typography marginTop={ '10px'}>
                       <strong>Release Date:</strong>{" "}
                       {movieDetails?.Released || "N/A"}
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Typography>
+                  <Grid item sm={24} md={6}>
+                    <Typography >
                       <strong>Duration:</strong>{" "}
                       {movieDetails?.Runtime || "N/A"}
                     </Typography>
-                    <Typography>
+                    <Typography marginTop={ '10px'}>
                       <strong>IMDb Rating:</strong>{" "}
                       {movieDetails?.imdbRating || "N/A"}
                     </Typography>
