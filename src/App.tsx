@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import MovieGrid from "./components/MovieGrid";
+import MovieGrid from "./components";
 import MovieDetails from "./components/MovieDetails";
 import { Box,  CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme";

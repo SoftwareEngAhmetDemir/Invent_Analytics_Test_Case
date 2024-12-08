@@ -16,7 +16,7 @@ interface FilterPartProps {
   setYear: React.Dispatch<React.SetStateAction<string | null>>;
   type: string;
   setType: React.Dispatch<React.SetStateAction<string>>;
-  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const FilterPart: React.FC<FilterPartProps> = ({
@@ -26,7 +26,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
   setYear,
   type,
   setType,
-  page
+  setPage
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -35,18 +35,20 @@ const FilterPart: React.FC<FilterPartProps> = ({
     debounce((query: string) => {
       dispatch(getMovies({ search: query, type, year, page: 1 }));
     }, 500),
-    [dispatch, type, year, page]
+    [dispatch, type, year]
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    setPage(1);
     setSearch(value);
     debouncedSearch(value);
   };
 
   const handleTypeChange = (_: React.SyntheticEvent, newValue: string) => {
+    setPage(1);
     setType(newValue);
-    // dispatch(getMovies({ search, type: newValue, year, page: 1 }));
+    dispatch(getMovies({ search, type: newValue, year, page: 1 }));
   };
   const currentYear = dayjs();
   return (
@@ -70,7 +72,13 @@ const FilterPart: React.FC<FilterPartProps> = ({
             yearsOrder="desc"
             sx={{ minWidth: 250 }}
             onChange={(date: Dayjs | null) =>
-              setYear(date?.year().toString() || null)
+             {
+              setPage(1);
+              setYear(date?.year().toString() || null);
+              dispatch(getMovies({ search: search, type, year:date?.year().toString() || null, page: 1 }));
+             }
+            
+              // dispatch(getMovies({ search: search, type, year:date?.year().toString() as string, page: 1 }))
             }
           />
         </LocalizationProvider>

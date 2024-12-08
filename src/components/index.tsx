@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovies } from "../redux/movieSlice";
 import { RootState, AppDispatch } from "../redux/store";
-import { Grid, CircularProgress, Box, Pagination } from "@mui/material";
+import { Grid, CircularProgress, Box, Typography } from "@mui/material";
 import MovieCard from "./MovieCard";
 import FilterPart from "./FilterPart";
 import PaginationComponent from "./PaginationComponent";
@@ -20,7 +20,7 @@ const MovieGrid: React.FC = () => {
 
   useEffect(() => {
     dispatch(getMovies({ search, type, year, page }));
-  }, [dispatch, type, year, page]);
+  }, [page]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -41,8 +41,8 @@ const MovieGrid: React.FC = () => {
           style={{
             backgroundColor: "#fff",
             borderRadius: "10px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)"
-            ,padding:'32px'
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+            padding: '32px',
           }}
         >
           {/* Filter component */}
@@ -53,7 +53,7 @@ const MovieGrid: React.FC = () => {
             setYear={setYear}
             type={type}
             setType={setType}
-            page={page}
+            setPage={setPage}
           />
         </Box>
         <br />
@@ -71,27 +71,42 @@ const MovieGrid: React.FC = () => {
           </Box>
         ) : (
           <>
-            <Grid container spacing={2}>
-              {movies.map((movie) => (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  lg={3}
-                  key={movie.imdbID}
-                
-                >
-                  <MovieCard movie={movie} />
+            {movies && movies.length > 0 ? (
+              <>
+                <Grid container spacing={2}>
+                  {movies.map((movie) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      lg={3}
+                      key={movie.imdbID}
+                    >
+                      <MovieCard movie={movie} key={movie.imdbID}/>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
-            <PaginationComponent
-              totalResults={totalResults}
-              page={page}
-              pageSize={10}
-              handlePageChange={handlePageChange}
-            />
+                <PaginationComponent
+                  totalResults={totalResults}
+                  page={page}
+                  pageSize={10}
+                  handlePageChange={handlePageChange}
+                />
+              </>
+            ) : (
+              <Box
+                style={{
+                  textAlign: "center",
+                  marginTop: "20px",
+                }}
+              >
+                {/* Placeholder Image */}
+                <Typography variant="h6" color="textSecondary">
+                 {search?.length>0?"No data found":"Please Write The Film You want to Search "}
+                </Typography>
+              </Box>
+            )}
           </>
         )}
       </Box>
