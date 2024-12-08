@@ -2,22 +2,11 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import {
   fetchMovies,
   fetchMovieDetails,
-  Movie,
-  MovieDetails
 } from "../api/omdbApi";
+import { Iseaching, MovieState } from "../entities/movie";
 
-interface MovieState {
-  movies: Movie[];
-  movieDetails: MovieDetails | null;
-  totalResults: number;
-  loading: boolean;
-  searching: {
-    title: string | null;
-    year: string | null;
-    type: string | null;
-  };
-  loadingDetails: boolean
-}
+
+
 
 const initialState: MovieState = {
   movies: [],
@@ -27,7 +16,8 @@ const initialState: MovieState = {
   searching: {
     title: null,
     year: null,
-    type: null
+    type: null,
+    page: 1
   },
   loadingDetails: false
 };
@@ -55,16 +45,12 @@ export const getMovieDetails = createAsyncThunk(
     return await fetchMovieDetails(id);
   }
 );
-interface seaching {
-  title: string|null;
-  type: string|null;
-  year: string|null;
-}
+
 const movieSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
-    setMovieFilter: (state, action: PayloadAction<seaching>) => {
+    setMovieFilter: (state, action: PayloadAction<Iseaching>) => {
       state.searching = {
         ...action.payload
       };

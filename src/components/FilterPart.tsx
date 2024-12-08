@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import s from "../styles/filter.module.scss";
+import { Iseaching } from "../entities/movie";
 
 interface FilterPartProps {
   search: string;
@@ -33,7 +34,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const movieSearhcing = useSelector(
     (state: RootState) => state.movies.searching
-  ) as { title: null | string; year: null | string; type: null | string };
+  ) as Iseaching;
   // Debounced search handler
   const debouncedSearch = useCallback(
     debounce((query: string) => {
@@ -43,7 +44,8 @@ const FilterPart: React.FC<FilterPartProps> = ({
           ...movieSearhcing,
           title: query,
           type,
-          year: year as string
+          year: year as string,
+          page: 1
         })
       );
     }, 500),
@@ -98,7 +100,8 @@ const FilterPart: React.FC<FilterPartProps> = ({
               dispatch(
                 setMovieFilter({
                   ...movieSearhcing,
-                  year: date?.year().toString() || null
+                  year: date?.year().toString() || null,
+                  page: 1
                 })
               );
               setPage(1);
@@ -119,7 +122,6 @@ const FilterPart: React.FC<FilterPartProps> = ({
           onChange={handleTypeChange}
           indicatorColor="primary"
           textColor="primary"
-          style={{ flex: 1 }}
         >
           <Tab label="All" value="" />
           <Tab label="Movie" value="movie" />

@@ -1,31 +1,6 @@
+import { MovieDetails, MovieResponse } from "../entities/movie";
 import axiosInstance from "../util/axiosInstance";
 
-export interface Movie {
-  imdbID: string;
-  Title: string;
-  Year: string;
-  Poster: string;
-  Type: string;
-}
-
-export interface MovieResponse {
-  Search: Movie[];
-  totalResults: string;
-  Response: string;
-}
-
-export interface MovieDetails {
-  Title: string;
-  Year: string;
-  Runtime: string;
-  Genre: string;
-  Director: string;
-  Actors: string;
-  Plot: string;
-  Poster: string;
-  imdbRating: string;
-  Released: string;
-}
 
 export const fetchMovies = async (
   search: string,

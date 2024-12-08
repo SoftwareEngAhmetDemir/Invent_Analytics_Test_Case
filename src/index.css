@@ -1,6 +1,14 @@
-.MuiTabs-flexContainer{
-    overflow-x: auto !important;
-    &::-webkit-scrollbar {
-        display: none;
-      }
+.MuiTabs-flexContainer {
+  overflow-x: auto !important;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+.w-full {
+  width: 100%;
 }

@@ -23,19 +23,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, cardHeight = 220 }) => {
         alignItems: "center",
         justifyContent: "space-between",
         height: "100%",
-        maxWidth: "100%",
+        width: "100%",
         paddingX: "8px",
         paddingY: "32px"
       }}
     >
-      <Link
-        to={`/movie/${movie.imdbID}`}
-        style={{
-          textDecoration: "none",
-          color: "inherit",
-          width: "100%"
-        }}
-      >
+      <Link to={`/movie/${movie.imdbID}`} className="w-full">
         {/* Movie Poster */}
         <CardMedia
           component="img"
@@ -48,15 +41,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, cardHeight = 220 }) => {
           sx={{
             width: "100%",
             height: cardHeight,
-            objectFit: "cover",
-           
+            objectFit: "cover"
           }}
         />
         {/* Movie Title */}
         <CardContent
           sx={{
             textAlign: "center",
-           marginTop:'10px',
+            marginTop: "10px",
             flexGrow: 1,
             width: "100%"
           }}
