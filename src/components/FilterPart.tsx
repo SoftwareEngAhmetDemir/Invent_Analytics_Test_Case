@@ -1,19 +1,13 @@
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import debounce from 'lodash.debounce';
-import {
-  TextField,
-  Tabs,
-  Tab,
-  Box,
-} from '@mui/material';
-import { TextFieldProps } from '@mui/material/TextField';
-import { getMovies } from '../redux/movieSlice';
-import { AppDispatch } from '../redux/store';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import debounce from "lodash.debounce";
+import { TextField, Tabs, Tab, Box } from "@mui/material";
+import { getMovies } from "../redux/movieSlice";
+import { AppDispatch } from "../redux/store";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 interface FilterPartProps {
   search: string;
@@ -32,7 +26,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
   setYear,
   type,
   setType,
-  page,
+  page
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -40,7 +34,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
   const debouncedSearch = useCallback(
     debounce((query: string) => {
       dispatch(getMovies({ search: query, type, year, page: 1 }));
-    }, 300),
+    }, 500),
     [dispatch, type, year, page]
   );
 
@@ -50,14 +44,14 @@ const FilterPart: React.FC<FilterPartProps> = ({
     debouncedSearch(value);
   };
 
-  const handleTypeChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTypeChange = (_: React.SyntheticEvent, newValue: string) => {
     setType(newValue);
-    dispatch(getMovies({ search, type: newValue, year, page: 1 }));
+    // dispatch(getMovies({ search, type: newValue, year, page: 1 }));
   };
   const currentYear = dayjs();
   return (
     <>
-      <Box style={{ marginBottom: '20px' }}>
+      <Box style={{ marginBottom: "20px" }}>
         <TextField
           label="Search for Movies"
           variant="outlined"
@@ -66,18 +60,20 @@ const FilterPart: React.FC<FilterPartProps> = ({
           fullWidth
         />
       </Box>
-      <Box style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
-        label="Select Years"
-        maxDate={currentYear}
-        openTo="year"
-        views={['year']}
-        yearsOrder="desc"
-        sx={{ minWidth: 250 }}
-        onChange={(date: Dayjs | null) => setYear(date?.year().toString() || null)}
-      />
-    </LocalizationProvider>
+      <Box style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Select Years"
+            maxDate={currentYear}
+            openTo="year"
+            views={["year"]}
+            yearsOrder="desc"
+            sx={{ minWidth: 250 }}
+            onChange={(date: Dayjs | null) =>
+              setYear(date?.year().toString() || null)
+            }
+          />
+        </LocalizationProvider>
         <Tabs
           value={type}
           onChange={handleTypeChange}
