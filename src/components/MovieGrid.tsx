@@ -9,8 +9,13 @@ import {
   CircularProgress,
   MenuItem,
   Select,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import MovieCard from './MovieCard';
 
 const MovieGrid: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -65,15 +70,21 @@ const MovieGrid: React.FC = () => {
       ) : (
         <>
           <Grid container spacing={2}>
-            {movies.map((movie) => (
-              <Grid item xs={12} sm={6} md={4} key={movie.imdbID}>
-                <Link to={`/movie/${movie.imdbID}`}>
-                  <img src={movie.Poster} alt={movie.Title} style={{ width: '100%' }} />
-                  <p>{movie.Title}</p>
-                </Link>
+          {movies.map((movie) => (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                key={movie.imdbID}
+                style={{ marginBottom: '16px' }}
+              >
+               <MovieCard movie={movie} />
               </Grid>
             ))}
           </Grid>
+          
           <Pagination
             count={Math.ceil(totalResults / 10)}
             page={page}
