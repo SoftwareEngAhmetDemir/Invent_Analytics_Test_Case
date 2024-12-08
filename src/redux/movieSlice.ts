@@ -16,6 +16,7 @@ interface MovieState {
     year: string | null;
     type: string | null;
   };
+  loadingDetails: boolean
 }
 
 const initialState: MovieState = {
@@ -27,7 +28,8 @@ const initialState: MovieState = {
     title: null,
     year: null,
     type: null
-  }
+  },
+  loadingDetails: false
 };
 
 export const getMovies = createAsyncThunk(
@@ -81,9 +83,15 @@ const movieSlice = createSlice({
       .addCase(getMovies.rejected, (state) => {
         state.loading = false;
       })
+      .addCase(getMovieDetails.pending,(state)=>{
+        state.loadingDetails = true;
+      })
       .addCase(getMovieDetails.fulfilled, (state, action) => {
         state.movieDetails = action.payload;
-      });
+        state.loadingDetails = false;
+      }).addCase(getMovieDetails.rejected,(state)=>{
+        state.loadingDetails = false;
+      })
   }
 });
 export const { setMovieFilter } = movieSlice.actions;

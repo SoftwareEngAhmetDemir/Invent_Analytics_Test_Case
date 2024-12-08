@@ -23,7 +23,7 @@ const placeholderImage = process.env.REACT_APP_PLACEHOLDER_IMAGE;
 const MovieDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const { movieDetails } = useSelector((state: RootState) => state.movies);
+  const { movieDetails,loadingDetails } = useSelector((state: RootState) => state.movies);
 
   const [posterError, setPosterError] = useState(false);
 
@@ -35,7 +35,7 @@ const MovieDetails: React.FC = () => {
     setPosterError(true);
   };
 
-  if (!movieDetails) {
+  if (loadingDetails) {
     return (
       <Box textAlign="center" mt={5}>
         <CircularProgress />
@@ -55,8 +55,8 @@ const MovieDetails: React.FC = () => {
         <CardMedia
           component="img"
           height="600"
-          image={posterError ? placeholderImage : movieDetails.Poster}
-          alt={movieDetails.Title}
+          image={posterError ? placeholderImage : movieDetails?.Poster}
+          alt={movieDetails?.Title}
           onError={handleImageError}
           sx={{
             objectFit: "fill",
@@ -72,7 +72,7 @@ const MovieDetails: React.FC = () => {
             alignItems="center"
           >
             <Typography variant="h4" gutterBottom>
-              {movieDetails.Title}
+              {movieDetails?.Title}
             </Typography>
             <IconButton color="primary" href="/">
               <ArrowBackIcon />
@@ -86,7 +86,7 @@ const MovieDetails: React.FC = () => {
               Overview
             </Typography>
             <Typography variant="body1" paragraph>
-              {movieDetails.Plot || "No plot description available."}
+              {movieDetails?.Plot || "No plot description available."}
             </Typography>
           </Box>
 
@@ -97,19 +97,19 @@ const MovieDetails: React.FC = () => {
               Details
             </Typography>
             <Typography>
-              <strong>Director:</strong> {movieDetails.Director || "N/A"}
+              <strong>Director:</strong> {movieDetails?.Director || "N/A"}
             </Typography>
             <Typography>
-              <strong>Cast:</strong> {movieDetails.Actors || "N/A"}
+              <strong>Cast:</strong> {movieDetails?.Actors || "N/A"}
             </Typography>
             <Typography>
-              <strong>Genre:</strong> {movieDetails.Genre || "N/A"}
+              <strong>Genre:</strong> {movieDetails?.Genre || "N/A"}
             </Typography>
             <Typography>
-              <strong>Release Date:</strong> {movieDetails.Released || "N/A"}
+              <strong>Release Date:</strong> {movieDetails?.Released || "N/A"}
             </Typography>
             <Typography>
-              <strong>Duration:</strong> {movieDetails.Runtime || "N/A"}
+              <strong>Duration:</strong> {movieDetails?.Runtime || "N/A"}
             </Typography>
           </Box>
 
@@ -120,7 +120,7 @@ const MovieDetails: React.FC = () => {
               Ratings
             </Typography>
             <Typography>
-              <strong>IMDb Rating:</strong> {movieDetails.imdbRating || "N/A"}
+              <strong>IMDb Rating:</strong> {movieDetails?.imdbRating || "N/A"}
             </Typography>
           </Box>
         </CardContent>
