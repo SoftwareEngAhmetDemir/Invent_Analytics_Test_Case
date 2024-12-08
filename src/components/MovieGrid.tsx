@@ -8,6 +8,8 @@ import {
   Grid,
   Pagination,
   CircularProgress,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import MovieCard from './MovieCard';
 
@@ -17,7 +19,7 @@ const MovieGrid: React.FC = () => {
 
   const [search, setSearch] = useState<string>('Pokemon');
   const [year, setYear] = useState<string | null>(null);
-  const [type, setType] = useState<string | null>('Movie');
+  const [type, setType] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
@@ -61,6 +63,17 @@ const MovieGrid: React.FC = () => {
           onChange={(e) => setYear(e.target.value || null)}
           style={{ marginLeft: '16px' }}
         />
+         <Select
+          value={type || ''}
+          onChange={(e) => setType(e.target.value || null)}
+          displayEmpty
+          style={{ marginLeft: '16px' }}
+        >
+          <MenuItem value="">All</MenuItem>
+          <MenuItem value="movie">Movie</MenuItem>
+          <MenuItem value="series">TV Series</MenuItem>
+          <MenuItem value="episode">Episode</MenuItem>
+        </Select>
       </div>
 
       {loading ? (
