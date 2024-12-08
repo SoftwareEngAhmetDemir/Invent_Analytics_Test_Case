@@ -90,7 +90,7 @@ const MovieDetails: React.FC = () => {
 
             <Divider />
 
-            <Box mt={2}>
+            <Box mt={2} mb={2}>
               <Typography variant="h6" gutterBottom>
                 Details
               </Typography>
@@ -110,7 +110,7 @@ const MovieDetails: React.FC = () => {
                 <strong>Duration:</strong> {movieDetails?.Runtime || "N/A"}
               </Typography>
             </Box>
-            <Divider />
+            <Divider/>
             <Box mt={2}>
               <Typography variant="h6" gutterBottom>
                 Ratings
