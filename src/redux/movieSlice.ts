@@ -1,11 +1,21 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchMovies, fetchMovieDetails, Movie, MovieDetails } from '../api/omdbApi';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  fetchMovies,
+  fetchMovieDetails,
+  Movie,
+  MovieDetails
+} from "../api/omdbApi";
 
 interface MovieState {
   movies: Movie[];
   movieDetails: MovieDetails | null;
   totalResults: number;
   loading: boolean;
+  searching: {
+    title: string | null;
+    year: string | null;
+    type: string | null;
+  };
 }
 
 const initialState: MovieState = {
@@ -13,15 +23,20 @@ const initialState: MovieState = {
   movieDetails: null,
   totalResults: 0,
   loading: false,
+  searching: {
+    title: null,
+    year: null,
+    type: null
+  }
 };
 
 export const getMovies = createAsyncThunk(
-  'movies/getMovies',
+  "movies/getMovies",
   async ({
     search,
     type,
     year,
-    page,
+    page
   }: {
     search: string;
     type: string | null;
@@ -33,16 +48,26 @@ export const getMovies = createAsyncThunk(
 );
 
 export const getMovieDetails = createAsyncThunk(
-  'movies/getMovieDetails',
+  "movies/getMovieDetails",
   async (id: string) => {
     return await fetchMovieDetails(id);
   }
 );
-
+interface seaching {
+  title: string|null;
+  type: string|null;
+  year: string|null;
+}
 const movieSlice = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
-  reducers: {},
+  reducers: {
+    setMovieFilter: (state, action: PayloadAction<seaching>) => {
+      state.searching = {
+        ...action.payload
+      };
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getMovies.pending, (state) => {
@@ -59,7 +84,8 @@ const movieSlice = createSlice({
       .addCase(getMovieDetails.fulfilled, (state, action) => {
         state.movieDetails = action.payload;
       });
-  },
+  }
 });
+export const { setMovieFilter } = movieSlice.actions;
 
 export default movieSlice.reducer;

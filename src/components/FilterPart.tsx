@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
 import { TextField, Tabs, Tab, Box } from "@mui/material";
-import { getMovies } from "../redux/movieSlice";
-import { AppDispatch } from "../redux/store";
+import { getMovies, setMovieFilter } from "../redux/movieSlice";
+import { AppDispatch, RootState } from "../redux/store";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -31,11 +31,16 @@ const FilterPart: React.FC<FilterPartProps> = ({
   setPage
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const movieSearhcing = useSelector(
+    (state: RootState) => state.movies.searching
+  ) as {  title: null|string,
+    year: null|string,
+    type: null|string};
   // Debounced search handler
   const debouncedSearch = useCallback(
     debounce((query: string) => {
       dispatch(getMovies({ search: query, type, year, page: 1 }));
+      dispatch(setMovieFilter({...movieSearhcing, title: query,type,year: year as string}) )
     }, 500),
     [dispatch, type, year]
   );
@@ -45,15 +50,22 @@ const FilterPart: React.FC<FilterPartProps> = ({
     setPage(1);
     setSearch(value);
     debouncedSearch(value);
+    dispatch(setMovieFilter({...movieSearhcing, title: value,type,year: year as string}) )
   };
 
   const handleTypeChange = (_: React.SyntheticEvent, newValue: string) => {
     setPage(1);
     setType(newValue);
     dispatch(getMovies({ search, type: newValue, year, page: 1 }));
+   
+      dispatch(setMovieFilter({...movieSearhcing,type: newValue}) )
+    
   };
   return (
     <div className={s.filter}>
+      {
+        JSON.stringify(movieSearhcing)
+      }
       <Box className={s.leftSide}>
         <TextField
           label="Search for Movies"
@@ -61,6 +73,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
           value={search}
           onChange={handleSearchChange}
           fullWidth
+          defaultValue={movieSearhcing.title}
         />
       </Box>
       <Box className={s.rightSide}>
@@ -71,8 +84,10 @@ const FilterPart: React.FC<FilterPartProps> = ({
             openTo="year"
             views={["year"]}
             yearsOrder="desc"
+            defaultValue={dayjs().year(year as any)}
            className={s.datePicker}
             onChange={(date: Dayjs | null) => {
+              dispatch(setMovieFilter({...movieSearhcing,year: date?.year().toString() || null}) )
               setPage(1);
               setYear(date?.year().toString() || null);
               dispatch(
@@ -83,6 +98,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
                   page: 1
                 })
               );
+              
             }}
           />
         </LocalizationProvider>

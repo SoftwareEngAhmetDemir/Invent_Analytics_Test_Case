@@ -7,8 +7,8 @@
     display: flex;
     gap: 16px;
     align-items: center;
-    .datePicker{
-        min-width: 250px;
+    .datePicker {
+      min-width: 250px;
     }
   }
 }
@@ -17,10 +17,11 @@
   .filter {
     .rightSide {
       display: block;
-      .datePicker{
+      
+      .datePicker {
         min-width: 100%;
         margin-bottom: 10px;
-    }
+      }
     }
     [class~="MuiTabs-indicator"] {
       display: none !important;

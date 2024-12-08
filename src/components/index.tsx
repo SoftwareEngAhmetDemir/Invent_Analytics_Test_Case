@@ -12,10 +12,14 @@ const MovieGrid: React.FC = () => {
   const { movies, totalResults, loading } = useSelector(
     (state: RootState) => state.movies
   );
-
-  const [search, setSearch] = useState<string>("Pokemon");
-  const [year, setYear] = useState<string | null>(null);
-  const [type, setType] = useState<string>("");
+  const movieSearhcing = useSelector(
+    (state: RootState) => state.movies.searching
+  ) as {  title: null|string,
+    year: null|string,
+    type: null|string};
+  const [search, setSearch] = useState<string>(movieSearhcing.title||"Pokemon");
+  const [year, setYear] = useState<string | null>(movieSearhcing.year||null);
+  const [type, setType] = useState<string>(movieSearhcing.type||"");
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {

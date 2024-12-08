@@ -79,10 +79,6 @@ const MovieDetails: React.FC = () => {
             </IconButton>
           </Box>
 
-          {/* <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-            {movieDetails.Tagline || 'No tagline available'}
-          </Typography> */}
-
           <Divider />
 
           <Box mt={2}>
