@@ -13,7 +13,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
   totalResults,
   page,
   pageSize,
-  handlePageChange
+  handlePageChange,
 }) => {
   return (
     <Pagination
@@ -31,16 +31,16 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
           fontSize: "1rem",
           width: "40px",
           height: "40px",
-          borderRadius: "50%"
+          borderRadius: "50%",
         },
         "& .Mui-selected": {
           backgroundColor: "#f50057 !important",
           color: "white",
-          boxShadow: "0px 2px 4px rgba(76, 175, 79, 0.5)"
+          boxShadow: "0px 2px 4px rgba(76, 175, 79, 0.5)",
         },
         "& .MuiPaginationItem-root:hover": {
-          boxShadow: "0px 2px 4px rgba(76, 175, 79, 0.5)"
-        }
+          boxShadow: "0px 2px 4px rgba(76, 175, 79, 0.5)",
+        },
       }}
     />
   );

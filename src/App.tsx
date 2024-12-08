@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <CssBaseline />
       <Box
         sx={{
-          padding: theme.spacing(3) // Add consistent padding using theme.spacing()
+          padding: theme.spacing(3), // Add consistent padding using theme.spacing()
         }}
       >
         <Router>

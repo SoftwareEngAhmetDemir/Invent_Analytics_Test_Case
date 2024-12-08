@@ -1,12 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import {
-  fetchMovies,
-  fetchMovieDetails,
-} from "../api/omdbApi";
+import { fetchMovies, fetchMovieDetails } from "../api/omdbApi";
 import { Iseaching, MovieState } from "../entities/movie";
-
-
-
 
 const initialState: MovieState = {
   movies: [],
@@ -17,9 +11,9 @@ const initialState: MovieState = {
     title: null,
     year: null,
     type: null,
-    page: 1
+    page: 1,
   },
-  loadingDetails: false
+  loadingDetails: false,
 };
 
 export const getMovies = createAsyncThunk(
@@ -28,7 +22,7 @@ export const getMovies = createAsyncThunk(
     search,
     type,
     year,
-    page
+    page,
   }: {
     search: string;
     type: string | null;
@@ -52,9 +46,9 @@ const movieSlice = createSlice({
   reducers: {
     setMovieFilter: (state, action: PayloadAction<Iseaching>) => {
       state.searching = {
-        ...action.payload
+        ...action.payload,
       };
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,16 +63,17 @@ const movieSlice = createSlice({
       .addCase(getMovies.rejected, (state) => {
         state.loading = false;
       })
-      .addCase(getMovieDetails.pending,(state)=>{
+      .addCase(getMovieDetails.pending, (state) => {
         state.loadingDetails = true;
       })
       .addCase(getMovieDetails.fulfilled, (state, action) => {
         state.movieDetails = action.payload;
         state.loadingDetails = false;
-      }).addCase(getMovieDetails.rejected,(state)=>{
-        state.loadingDetails = false;
       })
-  }
+      .addCase(getMovieDetails.rejected, (state) => {
+        state.loadingDetails = false;
+      });
+  },
 });
 export const { setMovieFilter } = movieSlice.actions;
 

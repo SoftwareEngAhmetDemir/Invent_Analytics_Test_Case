@@ -12,10 +12,9 @@ import {
   CircularProgress,
   Box,
   Divider,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
 import s from "../styles/MovieDetails.module.scss";
 
 const placeholderImage = process.env.REACT_APP_PLACEHOLDER_IMAGE;
@@ -59,7 +58,7 @@ const MovieDetails: React.FC = () => {
             onError={handleImageError}
             sx={{
               objectFit: "fill",
-              height: { xs: "300px", sm: "600px" } // Responsive
+              height: { xs: "300px", sm: "600px" }, // Responsive
             }}
           />
 
@@ -111,9 +110,7 @@ const MovieDetails: React.FC = () => {
                 <strong>Duration:</strong> {movieDetails?.Runtime || "N/A"}
               </Typography>
             </Box>
-
             <Divider />
-
             <Box mt={2}>
               <Typography variant="h6" gutterBottom>
                 Ratings

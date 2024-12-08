@@ -29,7 +29,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
   setYear,
   type,
   setType,
-  setPage
+  setPage,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const movieSearhcing = useSelector(
@@ -45,7 +45,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
           title: query,
           type,
           year: year as string,
-          page: 1
+          page: 1,
         })
       );
     }, 500),
@@ -62,7 +62,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
         ...movieSearhcing,
         title: value,
         type,
-        year: year as string
+        year: year as string,
       })
     );
   };
@@ -101,7 +101,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
                 setMovieFilter({
                   ...movieSearhcing,
                   year: date?.year().toString() || null,
-                  page: 1
+                  page: 1,
                 })
               );
               setPage(1);
@@ -111,7 +111,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
                   search: search,
                   type,
                   year: date?.year().toString() || null,
-                  page: 1
+                  page: 1,
                 })
               );
             }}

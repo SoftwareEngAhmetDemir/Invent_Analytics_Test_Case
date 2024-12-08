@@ -1,11 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
-import movieReducer from './movieSlice';
-import localStorage from 'redux-persist/lib/storage';
+import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import movieReducer from "./movieSlice";
+import localStorage from "redux-persist/lib/storage";
 
 // Persist configuration
 const persistConfig = {
-  key: 'root', // Key for the storage
+  key: "root", // Key for the storage
   storage: localStorage, // Replace localStorage with sessionStorage
   // whitelist: ['movies'], // Only persist the `movies` reducer state
 };
