@@ -1,6 +1,9 @@
 .movieDetails {
   padding: 20px 0;
 
+[class~=MuiBox-root] {
+    padding: 0 !important;
+  }
   .movieCard {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

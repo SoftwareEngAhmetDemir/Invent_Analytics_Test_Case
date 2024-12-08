@@ -35,6 +35,7 @@ const MovieGrid: React.FC = () => {
       <Box
         style={{
           minHeight: "100vh",
+          padding:'0'
         }}
       >
         <Box

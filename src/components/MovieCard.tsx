@@ -56,12 +56,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, cardHeight = 220 }) => {
         <CardContent
           sx={{
             textAlign: "center",
-            padding: "8px",
+           marginTop:'10px',
             flexGrow: 1,
             width: "100%"
           }}
         >
-          <Typography variant="body2">{movie.Title}</Typography>
+          <Typography variant="h6">{movie.Title}</Typography>
         </CardContent>
       </Link>
     </Card>

@@ -1,0 +1,22 @@
+.filter {
+  padding: 10px;
+  .leftSide {
+    margin-bottom: 20px;
+  }
+  .rightSide {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .filter {
+    .rightSide {
+      display: block;
+    }
+    [class~="MuiTabs-indicator"] {
+      display: none !important;
+    }
+  }
+}

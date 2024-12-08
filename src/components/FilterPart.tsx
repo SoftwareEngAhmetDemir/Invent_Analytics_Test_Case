@@ -8,6 +8,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
+import s from '../styles/filter.module.scss';
 
 interface FilterPartProps {
   search: string;
@@ -19,6 +20,7 @@ interface FilterPartProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
+const currentYear = dayjs();
 const FilterPart: React.FC<FilterPartProps> = ({
   search,
   setSearch,
@@ -50,10 +52,9 @@ const FilterPart: React.FC<FilterPartProps> = ({
     setType(newValue);
     dispatch(getMovies({ search, type: newValue, year, page: 1 }));
   };
-  const currentYear = dayjs();
   return (
-    <>
-      <Box style={{ marginBottom: "20px" }}>
+    <div className={s.filter}>
+      <Box className={s.leftSide}>
         <TextField
           label="Search for Movies"
           variant="outlined"
@@ -62,7 +63,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
           fullWidth
         />
       </Box>
-      <Box style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+      <Box className={s.rightSide}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Select Years"
@@ -70,16 +71,19 @@ const FilterPart: React.FC<FilterPartProps> = ({
             openTo="year"
             views={["year"]}
             yearsOrder="desc"
-            sx={{ minWidth: 250 }}
-            onChange={(date: Dayjs | null) =>
-             {
+            sx={{ width: "100%" }}
+            onChange={(date: Dayjs | null) => {
               setPage(1);
               setYear(date?.year().toString() || null);
-              dispatch(getMovies({ search: search, type, year:date?.year().toString() || null, page: 1 }));
-             }
-            
-              // dispatch(getMovies({ search: search, type, year:date?.year().toString() as string, page: 1 }))
-            }
+              dispatch(
+                getMovies({
+                  search: search,
+                  type,
+                  year: date?.year().toString() || null,
+                  page: 1
+                })
+              );
+            }}
           />
         </LocalizationProvider>
         <Tabs
@@ -95,7 +99,7 @@ const FilterPart: React.FC<FilterPartProps> = ({
           <Tab label="Episode" value="episode" />
         </Tabs>
       </Box>
-    </>
+    </div>
   );
 };
 

@@ -45,7 +45,11 @@ const MovieDetails: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="md" className={s.movieDetails}>
+    <div className={s.movieDetails}>
+
+   
+    <Container maxWidth="sm"  sx={{p:0}}
+    >
       <Card elevation={4} className={s.mainCard}>
         {/* Hero Section - Movie Poster */}
         <CardMedia
@@ -55,7 +59,8 @@ const MovieDetails: React.FC = () => {
           alt={movieDetails.Title}
           onError={handleImageError}
           sx={{
-            objectFit: "fill"
+            objectFit: "fill",
+            height: { xs: "300px", sm: "600px" }, // Responsive
           }}
         />
 
@@ -125,6 +130,7 @@ const MovieDetails: React.FC = () => {
         </CardContent>
       </Card>
     </Container>
+    </div>
   );
 };
 
