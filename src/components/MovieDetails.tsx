@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getMovieDetails } from '../redux/movieSlice';
-import { RootState, AppDispatch } from '../redux/store';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getMovieDetails } from "../redux/movieSlice";
+import { RootState, AppDispatch } from "../redux/store";
+import { useParams } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -12,11 +12,11 @@ import {
   CircularProgress,
   Box,
   Divider,
-  IconButton,
-} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+  IconButton
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import s from '../styles/MovieDetails.module.scss';
+import s from "../styles/MovieDetails.module.scss";
 
 const placeholderImage = process.env.REACT_APP_PLACEHOLDER_IMAGE;
 
@@ -51,23 +51,26 @@ const MovieDetails: React.FC = () => {
         <CardMedia
           component="img"
           height="600"
-         
           image={posterError ? placeholderImage : movieDetails.Poster}
           alt={movieDetails.Title}
           onError={handleImageError}
           sx={{
-            objectFit: 'fill',
+            objectFit: "fill"
           }}
         />
-        
+
         {/* Content Section */}
         <CardContent>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography variant="h4" gutterBottom>
               {movieDetails.Title}
             </Typography>
             <IconButton color="primary" href="/">
-            <ArrowBackIcon />
+              <ArrowBackIcon />
             </IconButton>
           </Box>
 
@@ -82,7 +85,7 @@ const MovieDetails: React.FC = () => {
               Overview
             </Typography>
             <Typography variant="body1" paragraph>
-              {movieDetails.Plot || 'No plot description available.'}
+              {movieDetails.Plot || "No plot description available."}
             </Typography>
           </Box>
 
@@ -93,19 +96,19 @@ const MovieDetails: React.FC = () => {
               Details
             </Typography>
             <Typography>
-              <strong>Director:</strong> {movieDetails.Director || 'N/A'}
+              <strong>Director:</strong> {movieDetails.Director || "N/A"}
             </Typography>
             <Typography>
-              <strong>Cast:</strong> {movieDetails.Actors || 'N/A'}
+              <strong>Cast:</strong> {movieDetails.Actors || "N/A"}
             </Typography>
             <Typography>
-              <strong>Genre:</strong> {movieDetails.Genre || 'N/A'}
+              <strong>Genre:</strong> {movieDetails.Genre || "N/A"}
             </Typography>
             <Typography>
-              <strong>Release Date:</strong> {movieDetails.Released || 'N/A'}
+              <strong>Release Date:</strong> {movieDetails.Released || "N/A"}
             </Typography>
             <Typography>
-              <strong>Runtime:</strong> {movieDetails.Runtime || 'N/A'}
+              <strong>Duration:</strong> {movieDetails.Runtime || "N/A"}
             </Typography>
           </Box>
 
@@ -116,7 +119,7 @@ const MovieDetails: React.FC = () => {
               Ratings
             </Typography>
             <Typography>
-              <strong>IMDb Rating:</strong> {movieDetails.imdbRating || 'N/A'}
+              <strong>IMDb Rating:</strong> {movieDetails.imdbRating || "N/A"}
             </Typography>
           </Box>
         </CardContent>
