@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getMovies, setMovieFilter } from "../redux/movieSlice";
 import { RootState, AppDispatch } from "../redux/store";
-import { Grid, CircularProgress, Box, Typography } from "@mui/material";
-import MovieCard from "./MovieCard";
+import {
+  CircularProgress,
+  Box,
+  Typography,
+} from "@mui/material";
 import FilterPart from "./FilterPart";
 import PaginationComponent from "./PaginationComponent";
+import MovieTable from "./MovieTable"; // Import the new component
 import { Iseaching } from "../entities/movie";
 import s from "../styles/list.module.scss";
+
 const MovieGrid: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { movies, totalResults, loading } = useSelector(
     (state: RootState) => state.movies
   );
@@ -35,12 +42,14 @@ const MovieGrid: React.FC = () => {
     setPage(value);
   };
 
+  const handleRowClick = (imdbID: string) => {
+    navigate(`/movie/${imdbID}`);
+  };
+
   return (
     <div className={s.list}>
-      {/* Page background and wrapper */}
       <Box>
         <Box className={s.containerFilter}>
-          {/* Filter component */}
           <FilterPart
             search={search}
             setSearch={setSearch}
@@ -52,7 +61,6 @@ const MovieGrid: React.FC = () => {
           />
         </Box>
         <br />
-        {/* Movie Grid & loader */}
         {loading ? (
           <Box className={s.loadingPos}>
             <CircularProgress />
@@ -61,13 +69,7 @@ const MovieGrid: React.FC = () => {
           <>
             {movies && movies.length > 0 ? (
               <>
-                <Grid container spacing={2}>
-                  {movies.map((movie) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={movie.imdbID}>
-                      <MovieCard movie={movie} key={movie.imdbID} />
-                    </Grid>
-                  ))}
-                </Grid>
+                <MovieTable movies={movies} onRowClick={handleRowClick} />
                 <PaginationComponent
                   totalResults={totalResults}
                   page={page}
@@ -77,7 +79,6 @@ const MovieGrid: React.FC = () => {
               </>
             ) : (
               <Box className={s.result}>
-                {/* Placeholder Image */}
                 <Typography variant="h6" color="textSecondary">
                   {search?.length > 0
                     ? "No data found"
