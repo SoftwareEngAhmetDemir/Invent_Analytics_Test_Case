@@ -64,8 +64,8 @@ const MovieDetails: React.FC = () => {
                 sx={{
                   minWidth: "250px",
                   width: "100%",
-                  borderRadius: { lg: 4, sm: 0 },
-                  height: "100%",
+                  borderBottomLeftRadius: { lg: 4, sm: 0 },
+                  height: {lg:  "500px" , sm: "100%"},
                   objectFit: "cover",
                 }}
               />

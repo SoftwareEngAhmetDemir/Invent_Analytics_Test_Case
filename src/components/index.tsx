@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMovies, setMovieFilter } from "../redux/movieSlice";
 import { RootState, AppDispatch } from "../redux/store";
-import {
-  CircularProgress,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import FilterPart from "./FilterPart";
 import PaginationComponent from "./PaginationComponent";
 import MovieTable from "./MovieTable"; // Import the new component
@@ -61,15 +57,15 @@ const MovieGrid: React.FC = () => {
           />
         </Box>
         <br />
-        {loading ? (
-          <Box className={s.loadingPos}>
-            <CircularProgress />
-          </Box>
-        ) : (
+      
           <>
-            {movies && movies.length > 0 ? (
+           
               <>
-                <MovieTable movies={movies} onRowClick={handleRowClick} />
+                <MovieTable
+                  movies={movies}
+                  onRowClick={handleRowClick}
+                  loading={loading}
+                />
                 <PaginationComponent
                   totalResults={totalResults}
                   page={page}
@@ -77,17 +73,9 @@ const MovieGrid: React.FC = () => {
                   handlePageChange={handlePageChange}
                 />
               </>
-            ) : (
-              <Box className={s.result}>
-                <Typography variant="h6" color="textSecondary">
-                  {search?.length > 0
-                    ? "No data found"
-                    : "Please Write The Film You want to Search "}
-                </Typography>
-              </Box>
-            )}
+
           </>
-        )}
+       
       </Box>
     </div>
   );
